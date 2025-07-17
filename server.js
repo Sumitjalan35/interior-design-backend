@@ -16,7 +16,6 @@ const blogRoutes = require('./routes/blog');
 const seoRoutes = require('./routes/seo');
 const notificationRoutes = require('./routes/notifications');
 const publicRoutes = require('./routes/public');
-const slideshowRoutes = require('./routes/slideshow');
 const { errorHandler } = require('./middleware/errorHandler');
 
 const app = express();
@@ -86,7 +85,6 @@ app.use('/api/seo', seoRoutes);
 app.use('/api/notifications', notificationRoutes);
 app.use('/api', publicRoutes);
 app.use('/api/projects', projectRoutes);
-app.use('/api/slideshow', slideshowRoutes);
 
 // Logging middleware
 if (process.env.NODE_ENV === 'development') {
