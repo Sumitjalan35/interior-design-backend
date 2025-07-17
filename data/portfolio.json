@@ -1,0 +1,207 @@
+[
+  {
+    "id": 1,
+    "title": "Dr Aftab Ahmad",
+    "category": "residential",
+    "mainImage": "/assets/Dr_Aftab_Ahmad/1-34.png",
+    "images": [
+      "/assets/Dr_Aftab_Ahmad/1-34.png",
+      "/assets/Dr_Aftab_Ahmad/2-26.png",
+      "/assets/Dr_Aftab_Ahmad/3-20.png",
+      "/assets/Dr_Aftab_Ahmad/4-21.png",
+      "/assets/Dr_Aftab_Ahmad/5-17.png"
+    ],
+    "description": "Elegant residential project for Dr. Aftab Ahmad",
+    "longDescription": "A sophisticated residential design that combines modern aesthetics with functional living spaces. This project showcases the perfect balance between luxury and comfort, featuring premium materials and innovative design solutions.",
+    "area": "1000 sq ft",
+    "budget": "₹15,00,000",
+    "duration": "3 months",
+    "location": "Mumbai, Maharashtra",
+    "features": [
+      "Custom furniture design",
+      "Premium material selection",
+      "Smart home integration",
+      "Efficient space planning",
+      "Luxury finishes"
+    ],
+    "testimonials": [
+      {
+        "rating": 5,
+        "content": "The team delivered exactly what we envisioned. The attention to detail is remarkable.",
+        "name": "Dr. Aftab Ahmad",
+        "role": "Client"
+      }
+    ]
+  },
+  {
+    "id": 2,
+    "title": "Mr Amit Agarwal Showroom",
+    "category": "commercial",
+    "mainImage": "/assets/Mr_Amit_Agarwal_Showroom/IMG-20240918-WA0001.jpg",
+    "images": [
+      "/assets/Mr_Amit_Agarwal_Showroom/IMG-20240918-WA0001.jpg",
+      "/assets/Mr_Amit_Agarwal_Showroom/IMG-20240918-WA0002.jpg",
+      "/assets/Mr_Amit_Agarwal_Showroom/IMG-20240918-WA0002 (1).jpg"
+    ],
+    "description": "Luxury showroom design for Mr. Amit Agarwal",
+    "longDescription": "A modern showroom with premium finishes and innovative lighting. This commercial space is designed to create an immersive shopping experience while maximizing product visibility and customer engagement.",
+    "area": "2000 sq ft",
+    "budget": "₹25,00,000",
+    "duration": "4 months",
+    "location": "Delhi, NCR",
+    "features": [
+      "Modern retail design",
+      "Innovative lighting solutions",
+      "Product display optimization",
+      "Customer flow management",
+      "Premium branding elements"
+    ],
+    "testimonials": [
+      {
+        "rating": 5,
+        "content": "The showroom design has significantly increased our foot traffic and sales.",
+        "name": "Mr. Amit Agarwal",
+        "role": "Owner"
+      }
+    ],
+    "image": "/uploads/admin/1752752821061-692083414.jpg"
+  },
+  {
+    "id": 3,
+    "title": "Mr Shashank Khetan Residence",
+    "category": "luxury",
+    "mainImage": "/assets/Mr_Shashank_Khetan_Residance/Screenshot 2025-07-02 205820.png",
+    "images": [
+      "/assets/Mr_Shashank_Khetan_Residance/Screenshot 2025-07-02 205820.png",
+      "/assets/Mr_Shashank_Khetan_Residance/Screenshot 2025-07-02 205847.png",
+      "/assets/Mr_Shashank_Khetan_Residance/Screenshot 2025-07-02 205912.png"
+    ],
+    "description": "Luxury residence for Mr. Shashank Khetan",
+    "longDescription": "A blend of luxury and comfort for a modern family. This residence features state-of-the-art amenities, custom design elements, and premium finishes that create an exceptional living experience.",
+    "area": "1500 sq ft",
+    "budget": "₹18,00,000",
+    "duration": "3.5 months",
+    "location": "Bangalore, Karnataka",
+    "features": [
+      "Luxury interior design",
+      "Custom furniture",
+      "Smart home technology",
+      "Premium materials",
+      "Personalized spaces"
+    ],
+    "testimonials": [
+      {
+        "rating": 5,
+        "content": "The transformation of our home is beyond our expectations. Every detail is perfect.",
+        "name": "Mr. Shashank Khetan",
+        "role": "Client"
+      }
+    ],
+    "image": "/uploads/admin/1752382842775-349915276.png"
+  },
+  {
+    "id": 4,
+    "title": "Sadir Khan Residence",
+    "category": "modern",
+    "mainImage": "/assets/Sadir_Khan_residence/1.jpg",
+    "images": [
+      "/assets/Sadir_Khan_residence/1.jpg",
+      "/assets/Sadir_Khan_residence/4.jpg",
+      "/assets/Sadir_Khan_residence/5.jpg"
+    ],
+    "description": "Modern residence for Sadir Khan",
+    "longDescription": "A contemporary design that emphasizes clean lines, open spaces, and natural light. This modern residence showcases minimalist aesthetics while maintaining functionality and comfort.",
+    "area": "1200 sq ft",
+    "budget": "₹12,00,000",
+    "duration": "2.5 months",
+    "location": "Pune, Maharashtra",
+    "features": [
+      "Modern minimalist design",
+      "Open floor plan",
+      "Natural light optimization",
+      "Contemporary furniture",
+      "Smart storage solutions"
+    ],
+    "testimonials": [
+      {
+        "rating": 5,
+        "content": "The modern design perfectly reflects our lifestyle. We love the clean and functional spaces.",
+        "name": "Sadir Khan",
+        "role": "Client"
+      }
+    ]
+  },
+  {
+    "id": 5,
+    "title": "Executive Suite",
+    "category": "executive",
+    "mainImage": "/uploads/admin/1752386021228-935028427.png",
+    "images": [
+      "/uploads/admin/1752386032591-313048645.png",
+      "/uploads/admin/1752386032595-65768443.png",
+      "/uploads/admin/1752386032596-279860142.png",
+      "/uploads/admin/1752386032598-727924457.png",
+      "/uploads/admin/1752386032600-664165657.png",
+      "/uploads/admin/1752386032601-852976535.png"
+    ],
+    "description": "Sophisticated executive suite with premium finishes",
+    "longDescription": "An executive suite designed for the modern professional, featuring sophisticated design elements, premium materials, and functional workspaces that inspire productivity and success.",
+    "area": "800 sq ft",
+    "budget": "₹10,00,000",
+    "duration": "2 months",
+    "location": "Hyderabad, Telangana",
+    "features": [
+      "Executive workspace design",
+      "Premium office furniture",
+      "Professional aesthetics",
+      "Efficient layout planning",
+      "High-end finishes"
+    ],
+    "testimonials": [
+      {
+        "rating": 5,
+        "content": "The executive suite perfectly balances professionalism with comfort. It's exactly what I needed.",
+        "name": "Executive Client",
+        "role": "Business Owner"
+      }
+    ],
+    "image": "/uploads/admin/1752385997492-876251653.png"
+  },
+  {
+    "title": "anikt agarwal",
+    "description": "hello",
+    "image": "/uploads/admin/1752382898077-408173009.png",
+    "id": 6,
+    "images": [
+      "/uploads/admin/1752382915853-820841061.png",
+      "/uploads/admin/1752382915875-974767001.png",
+      "/uploads/admin/1752382915913-859807964.png",
+      "/uploads/admin/1752382915935-352549016.png",
+      "/uploads/admin/1752382915951-920286587.png",
+      "/uploads/admin/1752382915975-753684693.png",
+      "/uploads/admin/1752382915996-492377679.png",
+      "/uploads/admin/1752382916004-958180105.png",
+      "/uploads/admin/1752382916018-805539998.png",
+      "/uploads/admin/1752382916041-346869038.png",
+      "/uploads/admin/1752382916049-497108449.png",
+      "/uploads/admin/1752382916056-960252502.png",
+      "/uploads/admin/1752382916083-229516946.png"
+    ],
+    "mainImage": "/uploads/admin/1752385897555-998262557.png"
+  },
+  {
+    "title": "heelo ji",
+    "description": "hi ji",
+    "image": "/uploads/admin/1752386091257-964984599.png",
+    "id": 7,
+    "images": [
+      "/uploads/admin/1752386107874-290308523.png",
+      "/uploads/admin/1752386107875-202112384.png",
+      "/uploads/admin/1752386107877-665947536.png",
+      "/uploads/admin/1752386107879-147828786.png",
+      "/uploads/admin/1752386107881-533952001.png",
+      "/uploads/admin/1752386107882-60813860.png"
+    ],
+    "mainImage": "/uploads/admin/1752386114374-803525363.png"
+  }
+]
