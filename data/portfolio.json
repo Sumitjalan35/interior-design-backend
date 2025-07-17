@@ -31,7 +31,8 @@
         "name": "Dr. Aftab Ahmad",
         "role": "Client"
       }
-    ]
+    ],
+    "image": "/uploads/admin/1752766519941-589189281.png"
   },
   {
     "id": 2,
@@ -64,7 +65,7 @@
         "role": "Owner"
       }
     ],
-    "image": "/uploads/admin/1752752821061-692083414.jpg"
+    "image": "/uploads/admin/1752766526877-36159197.png"
   },
   {
     "id": 3,
@@ -203,5 +204,35 @@
       "/uploads/admin/1752386107882-60813860.png"
     ],
     "mainImage": "/uploads/admin/1752386114374-803525363.png"
+  },
+  {
+    "title": "loko",
+    "description": "qwjhdouwqd",
+    "image": "/uploads/admin/1752764939396-201380547.png",
+    "id": 8,
+    "mainImage": "/uploads/admin/1752764958739-593749774.jpg",
+    "images": [
+      "/uploads/admin/1752764972693-748883297.jpg",
+      "/uploads/admin/1752764972704-197973145.jpg",
+      "/uploads/admin/1752764972713-841713590.jpg",
+      "/uploads/admin/1752764972719-705871858.jpg",
+      "/uploads/admin/1752764972726-363619357.jpg",
+      "/uploads/admin/1752764972731-933722380.jpg",
+      "/uploads/admin/1752764972738-683679713.png",
+      "/uploads/admin/1752764972740-566953041.png",
+      "/uploads/admin/1752764972741-697128123.png",
+      "/uploads/admin/1752764972742-956806522.png",
+      "/uploads/admin/1752764972743-288862712.png",
+      "/uploads/admin/1752764972744-293875332.png",
+      "/uploads/admin/1752764972745-750963540.png"
+    ],
+    "features": [
+      "w"
+    ],
+    "longDescription": "qskjbcjwsgbckjhqibgvcews",
+    "location": "hoeshwiqckswbjlxljjb",
+    "area": "qshco",
+    "duration": "wjodb",
+    "budget": "jqbhswcxj"
   }
 ]

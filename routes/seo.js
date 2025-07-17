@@ -220,7 +220,7 @@ router.delete('/:page', protect, checkPermission('manage_seo'), asyncHandler(asy
 // @route   GET /api/seo/sitemap.xml
 // @access  Public
 router.get('/sitemap.xml', asyncHandler(async (req, res) => {
-  const baseUrl = process.env.SITE_URL || 'http://localhost:5173';
+  const baseUrl = process.env.SITE_URL || 'https://beyondblueprint.co.in';
   const seoData = await SEO.getAll();
 
   const sitemapEntries = seoData.map(seo => seo.toSitemapEntry(baseUrl));

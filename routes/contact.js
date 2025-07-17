@@ -6,14 +6,16 @@ const { protect, admin } = require('../middleware/auth');
 const Contact = require('../models/Contact');
 const Notification = require('../models/Notification');
 const User = require('../models/User');
+const path = require('path');
 
 const router = express.Router();
 
 // Google Sheets API setup (optional)
 let sheetsAuth = null;
 try {
+  const credentialsPath = path.join(__dirname, '../google-credentials.json');
   sheetsAuth = new google.auth.GoogleAuth({
-    keyFile: './google-credentials.json',
+    keyFile: credentialsPath,
     scopes: ['https://www.googleapis.com/auth/spreadsheets'],
   });
 } catch (error) {

@@ -49,8 +49,16 @@ app.use('/api/', limiter);
 // CORS configuration
 app.use(cors({
   origin: process.env.NODE_ENV === 'production'
-    ? ['https://beyondblueprint.co.in']
-    : ['http://localhost:5173', 'http://localhost:3000'],
+    ? [
+        'https://beyondblueprint.co.in',
+        'https://www.beyondblueprint.co.in',
+        'https://admin.beyondblueprint.co.in',
+        'https://api.beyondblueprint.co.in'
+      ]
+    : [
+        'http://localhost:5173',
+        'http://localhost:3000'
+      ],
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With'],
@@ -98,7 +106,7 @@ app.use('*', (req, res) => {
   });
 });
 
-const PORT = process.env.PORT || 5050;
+const PORT = process.env.PORT || 5000;
 
 app.listen(PORT, () => {
   console.log(`🚀 Server running on port ${PORT}`);

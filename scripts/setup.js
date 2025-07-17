@@ -187,7 +187,7 @@ const setupDatabase = async () => {
     console.log('1. Update your .env file with your actual credentials');
     console.log('2. Start the backend server: npm run dev');
     console.log('3. Start the frontend: cd .. && npm run dev');
-    console.log('4. Access admin panel at: http://localhost:5173/admin');
+    console.log('4. Access admin panel at: https://admin.beyondblueprint.co.in/admin');
     console.log('5. Login with: admin@interiordesign.com / admin123');
 
   } catch (error) {

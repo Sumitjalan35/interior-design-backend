@@ -628,6 +628,18 @@ router.get('/services', asyncHandler(async (req, res) => {
   }
 }));
 
+// Add this GET endpoint for a single service by id
+router.get('/services/:id', asyncHandler(async (req, res) => {
+  try {
+    const items = await readJson(files.services);
+    const item = items.find(i => i.id === req.params.id);
+    if (!item) return res.status(404).json({ error: 'Service not found' });
+    res.json(item);
+  } catch (error) {
+    res.status(500).json({ error: 'Failed to load service data' });
+  }
+}));
+
 router.post('/services', asyncHandler(async (req, res) => {
   try {
     const items = await readJson(files.services);
@@ -641,15 +653,15 @@ router.post('/services', asyncHandler(async (req, res) => {
   }
 }));
 
+// Add this PUT endpoint for updating a service by id
 router.put('/services/:id', asyncHandler(async (req, res) => {
   try {
     const items = await readJson(files.services);
-    const serviceId = parseInt(req.params.id);
-    const idx = items.findIndex(i => i.id === serviceId);
-    if (idx === -1) return res.status(404).json({ error: 'Service not found' });
-    items[idx] = { ...items[idx], ...req.body };
+    const index = items.findIndex(i => i.id === req.params.id);
+    if (index === -1) return res.status(404).json({ error: 'Service not found' });
+    items[index] = { ...items[index], ...req.body };
     await writeJson(files.services, items);
-    res.json(items[idx]);
+    res.json(items[index]);
   } catch (error) {
     res.status(500).json({ error: 'Failed to update service' });
   }

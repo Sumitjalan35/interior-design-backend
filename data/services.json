@@ -1,7 +1,7 @@
 [
   {
     "id": "ICONIC",
-    "title": "ICONIC ARCHITECTURE",
+    "title": "ICONIC ARCHITECTURE hello",
     "image": "/assets/services-architecture.jpg",
     "description": "Design is the manifestation of a story. To tailor a space to the versatile tastes of discerning clients, Principal Architect, Aparna Kaushik begins by assimilating a narrative that spans both functional and aspirational preferences in modern as well as classic style signatures.\n\nBeginning with intricate sketches and swatches that capture the client's desired outcome, the team creates conceptual study models and highly sophisticated renders to visualize the process and results. From preliminary conception through design evolution, the team works inventively to deliver unique spaces with a signature style."
   },
@@ -29,4 +29,4 @@
     "image": "/assets/services-landscape.jpg",
     "description": "Our landscape designs create serene outdoor environments that extend the luxury of the interiors to the exterior. We blend natural elements with architectural features to craft gardens, courtyards, and terraces that inspire relaxation and connection with nature."
   }
-] 
+]
