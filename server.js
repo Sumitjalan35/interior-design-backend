@@ -48,7 +48,26 @@ const limiter = rateLimit({
 app.use('/api/', limiter);
 
 // CORS configuration
-app.use(cors());
+app.use(cors({
+  origin: process.env.NODE_ENV === 'production'
+    ? [
+        'https://beyondblueprint.co.in',
+        'https://www.beyondblueprint.co.in',
+        'https://admin.beyondblueprint.co.in',
+        'https://api.beyondblueprint.co.in'
+      ]
+    : (origin, callback) => {
+        // Allow all localhost ports in development
+        if (!origin || /^http:\/\/localhost:\d+$/.test(origin)) {
+          callback(null, true);
+        } else {
+          callback(new Error('Not allowed by CORS'));
+        }
+      },
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With'],
+}));
 
 // Body parser middleware (for JSON and URL-encoded data)
 app.use(express.json({ limit: '50mb' }));
