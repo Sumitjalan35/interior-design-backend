@@ -16,6 +16,7 @@ const blogRoutes = require('./routes/blog');
 const seoRoutes = require('./routes/seo');
 const notificationRoutes = require('./routes/notifications');
 const publicRoutes = require('./routes/public');
+const slideshowRoutes = require('./routes/slideshow');
 const { errorHandler } = require('./middleware/errorHandler');
 
 const app = express();
@@ -53,8 +54,7 @@ app.use(cors({
         'https://beyondblueprint.co.in',
         'https://www.beyondblueprint.co.in',
         'https://admin.beyondblueprint.co.in',
-        'https://api.beyondblueprint.co.in',
-        'https://interior-design-frontend-six.vercel.app' // <-- Add your Vercel frontend domain here
+        'https://api.beyondblueprint.co.in'
       ]
     : (origin, callback) => {
         // Allow all localhost ports in development
@@ -85,6 +85,7 @@ app.use('/api/seo', seoRoutes);
 app.use('/api/notifications', notificationRoutes);
 app.use('/api', publicRoutes);
 app.use('/api/projects', projectRoutes);
+app.use('/api/slideshow', slideshowRoutes);
 
 // Logging middleware
 if (process.env.NODE_ENV === 'development') {
