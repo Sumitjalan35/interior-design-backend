@@ -5,10 +5,10 @@
       "src": "server.js",
       "use": "@vercel/node",
       "config": {
-        "includeFiles": [],     // Add only needed files here
+        "includeFiles": [],     
         "excludeFiles": [
-          "node_modules/**/*",  // Exclude heavy dependencies
-          "**/*.test.js",       // Exclude test files
+          "node_modules/**/*",  
+          "**/*.test.js",      
           "**/__tests__/**",
           "**/*.md",
           "**/*.map",
