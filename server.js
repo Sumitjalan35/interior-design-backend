@@ -54,7 +54,8 @@ app.use(cors({
         'https://beyondblueprint.co.in',
         'https://www.beyondblueprint.co.in',
         'https://admin.beyondblueprint.co.in',
-        'https://api.beyondblueprint.co.in'
+        'https://api.beyondblueprint.co.in',
+      'https://interior-design-frontend-xi.vercel.app/'
       ]
     : (origin, callback) => {
         // Allow all localhost ports in development
