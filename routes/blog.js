@@ -5,24 +5,27 @@ const fs = require('fs');
 const { asyncHandler } = require('../middleware/errorHandler');
 const { protect, admin, checkPermission } = require('../middleware/auth');
 const BlogPost = require('../models/BlogPost');
+const { CloudinaryStorage } = require('multer-storage-cloudinary');
+const cloudinary = require('cloudinary').v2;
+
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME || 'bb-root',
+  api_key: process.env.CLOUDINARY_API_KEY || '433893671529262',
+  api_secret: process.env.CLOUDINARY_API_SECRET || 'qth_FC6o6lyIgt0oNEa4oNsDEu8',
+});
+
+const storage = new CloudinaryStorage({
+  cloudinary: cloudinary,
+  params: {
+    folder: 'blog_uploads',
+    allowed_formats: ['jpg', 'jpeg', 'png', 'gif'],
+  },
+});
+const upload = require('multer')({ storage: storage });
 
 const router = express.Router();
 
 // Configure multer for blog image uploads
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    const uploadPath = path.join(__dirname, '../uploads/blog');
-    if (!fs.existsSync(uploadPath)) {
-      fs.mkdirSync(uploadPath, { recursive: true });
-    }
-    cb(null, uploadPath);
-  },
-  filename: (req, file, cb) => {
-    const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
-    cb(null, file.fieldname + '-' + uniqueSuffix + path.extname(file.originalname));
-  }
-});
-
 const fileFilter = (req, file, cb) => {
   const allowedTypes = /jpeg|jpg|png|webp|gif/;
   const extname = allowedTypes.test(path.extname(file.originalname).toLowerCase());
@@ -34,14 +37,6 @@ const fileFilter = (req, file, cb) => {
     cb(new Error('Only image files are allowed!'), false);
   }
 };
-
-const upload = multer({
-  storage: storage,
-  limits: {
-    fileSize: parseInt(process.env.MAX_FILE_SIZE) || 5 * 1024 * 1024 // 5MB
-  },
-  fileFilter: fileFilter
-});
 
 // @desc    Get all published blog posts (public)
 // @route   GET /api/blog
@@ -172,7 +167,7 @@ router.post('/', protect, checkPermission('manage_blog'), upload.single('feature
 
   // Process uploaded image
   const featuredImage = req.file ? {
-    url: `/uploads/blog/${req.file.filename}`,
+    url: req.file.path,
     alt: req.body.featuredImageAlt || title
   } : null;
 
@@ -255,7 +250,7 @@ router.put('/:id', protect, checkPermission('manage_blog'), upload.single('featu
     }
     
     post.featuredImage = {
-      url: `/uploads/blog/${req.file.filename}`,
+      url: req.file.path,
       alt: req.body.featuredImageAlt || title
     };
   }
