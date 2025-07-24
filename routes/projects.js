@@ -5,44 +5,25 @@ const fs = require('fs');
 const { asyncHandler } = require('../middleware/errorHandler');
 const { protect, admin, optionalAuth } = require('../middleware/auth');
 const Project = require('../models/Project');
+const { CloudinaryStorage } = require('multer-storage-cloudinary');
+const cloudinary = require('cloudinary').v2;
+
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME || 'bb-root',
+  api_key: process.env.CLOUDINARY_API_KEY || '433893671529262',
+  api_secret: process.env.CLOUDINARY_API_SECRET || 'qth_FC6o6lyIgt0oNEa4oNsDEu8',
+});
+
+const storage = new CloudinaryStorage({
+  cloudinary: cloudinary,
+  params: {
+    folder: 'project_uploads',
+    allowed_formats: ['jpg', 'jpeg', 'png', 'gif'],
+  },
+});
+const upload = require('multer')({ storage: storage });
 
 const router = express.Router();
-
-// Configure multer for image uploads
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    const uploadPath = path.join(__dirname, '../uploads/projects');
-    if (!fs.existsSync(uploadPath)) {
-      fs.mkdirSync(uploadPath, { recursive: true });
-    }
-    cb(null, uploadPath);
-  },
-  filename: (req, file, cb) => {
-    const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
-    cb(null, file.fieldname + '-' + uniqueSuffix + path.extname(file.originalname));
-  }
-});
-
-const fileFilter = (req, file, cb) => {
-  const allowedTypes = /jpeg|jpg|png|webp|gif/;
-  const extname = allowedTypes.test(path.extname(file.originalname).toLowerCase());
-  const mimetype = allowedTypes.test(file.mimetype);
-
-  if (mimetype && extname) {
-    return cb(null, true);
-  } else {
-    cb(new Error('Only image files are allowed!'), false);
-  }
-};
-
-const upload = multer({
-  storage: storage,
-  limits: {
-    fileSize: 20 * 1024 * 1024, // 20MB per file
-    files: 20 // up to 20 images per upload
-  },
-  fileFilter: fileFilter
-});
 
 // Function to sync project with portfolio data
 const syncProjectWithPortfolio = async (projectData, projectId) => {
@@ -243,7 +224,7 @@ router.post('/', protect, admin, upload.array('images', 10), asyncHandler(async 
 
   // Process uploaded images
   const images = req.files ? req.files.map((file, index) => ({
-    url: `/uploads/projects/${file.filename}`,
+    url: file.path,
     alt: `${title} - Image ${index + 1}`,
     isPrimary: index === 0 // First image is primary
   })) : [];
@@ -329,7 +310,7 @@ router.put('/:id', protect, admin, upload.fields([
   // Add new uploaded images
   if (req.files && req.files['images'] && req.files['images'].length > 0) {
     const newImages = req.files['images'].map((file, index) => ({
-      url: `/uploads/projects/${file.filename}`,
+      url: file.path,
       alt: `${title || project.title} - Image ${images.length + index + 1}`,
       isPrimary: images.length === 0 && index === 0
     }));
@@ -339,7 +320,7 @@ router.put('/:id', protect, admin, upload.fields([
   // Handle mainImage (hero image) upload
   if (req.files && req.files['mainImage'] && req.files['mainImage'][0]) {
     const file = req.files['mainImage'][0];
-    project.mainImage = `/uploads/projects/${file.filename}`;
+    project.mainImage = file.path;
   }
 
   // Update project fields
