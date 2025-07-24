@@ -14,7 +14,7 @@ const storage = multer.diskStorage({
 const upload = multer({ storage });
 
 cloudinary.config({
-  cloud_name: 'BB',
+  cloud_name: 'dsffxqf8f',
   api_key: process.env.API_KEY,
   api_secret: process.env.API_SECRET
 });
