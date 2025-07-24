@@ -8,32 +8,23 @@ const { Parser } = require('json2csv');
 const fs = require('fs/promises');
 const path = require('path');
 const multer = require('multer');
+const { CloudinaryStorage } = require('multer-storage-cloudinary');
+const cloudinary = require('cloudinary').v2;
 
-// Multer setup for image uploads
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, path.join(__dirname, '../uploads/admin'));
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME || 'bb-root',
+  api_key: process.env.CLOUDINARY_API_KEY || '433893671529262',
+  api_secret: process.env.CLOUDINARY_API_SECRET || 'qth_FC6o6lyIgt0oNEa4oNsDEu8',
+});
+
+const storage = new CloudinaryStorage({
+  cloudinary: cloudinary,
+  params: {
+    folder: 'admin_uploads',
+    allowed_formats: ['jpg', 'jpeg', 'png', 'gif'],
   },
-  filename: (req, file, cb) => {
-    // Preserve original file extension
-    const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
-    const ext = path.extname(file.originalname);
-    cb(null, uniqueSuffix + ext);
-  }
 });
-
-const upload = multer({
-  storage: storage,
-  limits: { fileSize: 50 * 1024 * 1024 }, // 50MB for multiple files
-  fileFilter: (req, file, cb) => {
-    // Check file type
-    if (file.mimetype.startsWith('image/')) {
-      cb(null, true);
-    } else {
-      cb(new Error('Only image files are allowed'), false);
-    }
-  }
-});
+const upload = require('multer')({ storage: storage });
 
 const dataDir = path.join(__dirname, '../data');
 const files = {
@@ -54,48 +45,16 @@ async function writeJson(file, data) {
 const router = express.Router();
 
 // --- Image Upload with proper authentication ---
-router.post('/upload', protect, admin, (req, res, next) => {
-  // Support both single and multiple image uploads
-  const uploadMulti = multer({
-    storage: multer.diskStorage({
-      destination: (req, file, cb) => {
-        cb(null, path.join(__dirname, '../uploads/admin'));
-      },
-      filename: (req, file, cb) => {
-        const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
-        const ext = path.extname(file.originalname);
-        cb(null, uniqueSuffix + ext);
-      }
-    }),
-    limits: { fileSize: 10 * 1024 * 1024 }, // 10MB per file
-    fileFilter: (req, file, cb) => {
-      if (file.mimetype.startsWith('image/')) {
-        cb(null, true);
-      } else {
-        cb(new Error('Only image files are allowed'), false);
-      }
-    }
-  }).array('images', 20); // support up to 20 images at once
-
-  uploadMulti(req, res, function (err) {
-    if (err) {
-      console.error('Upload error:', err);
-      return res.status(400).json({ error: err.message });
-    }
-    if (!req.files || req.files.length === 0) {
-      // fallback to single file (for backward compatibility)
-      if (req.file) {
-        return res.json({ path: `/uploads/admin/${req.file.filename}` });
-      }
-      return res.status(400).json({ error: 'No file uploaded' });
-    }
-    // Multiple images
-    const paths = req.files.map(f => `/uploads/admin/${f.filename}`);
-    if (paths.length === 1) {
-      return res.json({ path: paths[0] });
-    }
-    return res.json({ paths });
-  });
+router.post('/upload', protect, admin, upload.array('images', 20), (req, res, next) => {
+  if (!req.files || req.files.length === 0) {
+    return res.status(400).json({ error: 'No file uploaded' });
+  }
+  // Cloudinary URLs are in req.files[].path
+  const paths = req.files.map(f => f.path);
+  if (paths.length === 1) {
+    return res.json({ path: paths[0] });
+  }
+  return res.json({ paths });
 });
 
 // All other routes require admin authentication
