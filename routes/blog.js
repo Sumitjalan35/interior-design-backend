@@ -7,6 +7,7 @@ const { protect, admin, checkPermission } = require('../middleware/auth');
 const BlogPost = require('../models/BlogPost');
 const { CloudinaryStorage } = require('multer-storage-cloudinary');
 const cloudinary = require('cloudinary').v2;
+const { upload, uploadfile } = require('../middleware/upload');
 
 cloudinary.config({
   cloud_name: process.env.CLOUDINARY_CLOUD_NAME || 'bb-root',
