@@ -2,31 +2,31 @@
   {
     "id": "ICONIC",
     "title": "ICONIC ARCHITECTURE",
-    "image": "/uploads/admin/1752788741377-990972786.png",
+    "image": "https://res.cloudinary.com/dxx12345678901234567890123/image/upload/v1700000000000/admin/1752788741377-990972786.png",
     "description": "Design is the manifestation of a story. To tailor a space to the versatile tastes of discerning clients, Principal Architect, Aparna Kaushik begins by assimilating a narrative that spans both functional and aspirational preferences in modern as well as classic style signatures.\n\nBeginning with intricate sketches and swatches that capture the client's desired outcome, the team creates conceptual study models and highly sophisticated renders to visualize the process and results. From preliminary conception through design evolution, the team works inventively to deliver unique spaces with a signature style."
   },
   {
     "id": "INTERIORS",
     "title": "INTERIORS",
-    "image": "/assets/services-interiors.jpg",
+    "image": "https://res.cloudinary.com/dxx12345678901234567890123/image/upload/v1700000000000/assets/services-interiors.jpg",
     "description": "Our interior design philosophy is rooted in timeless elegance and modern luxury. We curate every detail, from bespoke furnishings to ambient lighting, to create spaces that are both beautiful and functional. Each project is a harmonious blend of the client's vision and our expertise."
   },
   {
     "id": "STYLING",
     "title": "INTERIOR STYLING",
-    "image": "/assets/services-styling.jpg",
+    "image": "https://res.cloudinary.com/dxx12345678901234567890123/image/upload/v1700000000000/assets/services-styling.jpg",
     "description": "Styling is the art of elevating a space with curated decor, art, and accessories. Our team brings a refined touch to every project, ensuring that each element complements the overall design narrative and enhances the ambiance."
   },
   {
     "id": "FURNITURE",
     "title": "FURNITURE",
-    "image": "/assets/services-furniture.jpg",
+    "image": "https://res.cloudinary.com/dxx12345678901234567890123/image/upload/v1700000000000/assets/services-furniture.jpg",
     "description": "We design and source custom furniture pieces that reflect the unique character of each project. From statement sofas to handcrafted tables, our furniture selections are both luxurious and comfortable."
   },
   {
     "id": "LANDSCAPE",
     "title": "LANDSCAPE",
-    "image": "/assets/services-landscape.jpg",
+    "image": "https://res.cloudinary.com/dxx12345678901234567890123/image/upload/v1700000000000/assets/services-landscape.jpg",
     "description": "Our landscape designs create serene outdoor environments that extend the luxury of the interiors to the exterior. We blend natural elements with architectural features to craft gardens, courtyards, and terraces that inspire relaxation and connection with nature."
   }
 ]
