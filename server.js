@@ -78,7 +78,10 @@ app.use(express.urlencoded({ extended: true, limit: '50mb' }));
 // Static files
 app.use('/uploads', express.static(path.join(__dirname, 'uploads'), {
   setHeaders: (res, path, stat) => {
+    // Only set Access-Control-Allow-Origin for public images, do NOT set credentials
     res.set('Access-Control-Allow-Origin', '*');
+    // Remove any Access-Control-Allow-Credentials header for static files
+    res.removeHeader && res.removeHeader('Access-Control-Allow-Credentials');
   }
 }));
 // API Routes
