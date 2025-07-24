@@ -7,25 +7,7 @@ const Project = require('../models/Project');
 const { Parser } = require('json2csv');
 const fs = require('fs/promises');
 const path = require('path');
-const multer = require('multer');
-const { CloudinaryStorage } = require('multer-storage-cloudinary');
-const cloudinary = require('cloudinary').v2;
 const { upload, uploadfile } = require('../middleware/upload');
-
-cloudinary.config({
-  cloud_name: process.env.CLOUDINARY_CLOUD_NAME || 'BB',
-  api_key: process.env.CLOUDINARY_API_KEY || '433893671529262',
-  api_secret: process.env.CLOUDINARY_API_SECRET || 'qth_FC6o6lyIgt0oNEa4oNsDEu8',
-});
-
-const storage = new CloudinaryStorage({
-  cloudinary: cloudinary,
-  params: {
-    folder: 'admin_uploads',
-    allowed_formats: ['jpg', 'jpeg', 'png', 'gif'],
-  },
-});
-const upload = require('multer')({ storage: storage });
 
 const dataDir = path.join(__dirname, '../data');
 const files = {
