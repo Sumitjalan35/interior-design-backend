@@ -8,6 +8,13 @@ const { Parser } = require('json2csv');
 const fs = require('fs/promises');
 const path = require('path');
 const { upload, uploadfile } = require('../middleware/upload');
+const cloudinary = require('cloudinary').v2;
+
+cloudinary.config({
+  cloud_name: 'dsffxqf8f',
+  api_key: process.env.CLOUDINARY_API_KEY || '433893671529262',
+  api_secret: process.env.CLOUDINARY_API_SECRET || 'qth_FC6o6lyIgt0oNEa4oNsDEu8',
+});
 
 const dataDir = path.join(__dirname, '../data');
 const files = {
