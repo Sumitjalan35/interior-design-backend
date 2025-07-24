@@ -7,6 +7,7 @@ const { protect, admin, optionalAuth } = require('../middleware/auth');
 const Project = require('../models/Project');
 const { CloudinaryStorage } = require('multer-storage-cloudinary');
 const cloudinary = require('cloudinary').v2;
+const { upload, uploadfile } = require('../middleware/upload');
 
 cloudinary.config({
   cloud_name: process.env.CLOUDINARY_CLOUD_NAME || 'bb-root',
@@ -21,7 +22,7 @@ const storage = new CloudinaryStorage({
     allowed_formats: ['jpg', 'jpeg', 'png', 'gif'],
   },
 });
-const upload = require('multer')({ storage: storage });
+const uploadMulter = require('multer')({ storage: storage });
 
 const router = express.Router();
 
@@ -201,7 +202,7 @@ router.get('/:id', optionalAuth, asyncHandler(async (req, res) => {
 // @desc    Create new project (admin only)
 // @route   POST /api/projects
 // @access  Private/Admin
-router.post('/', protect, admin, upload.array('images', 10), asyncHandler(async (req, res) => {
+router.post('/', protect, admin, uploadMulter.array('images', 10), asyncHandler(async (req, res) => {
   const {
     title,
     description,
@@ -270,7 +271,7 @@ router.post('/', protect, admin, upload.array('images', 10), asyncHandler(async 
 // @desc    Update project (admin only)
 // @route   PUT /api/projects/:id
 // @access  Private/Admin
-router.put('/:id', protect, admin, upload.fields([
+router.put('/:id', protect, admin, uploadMulter.fields([
   { name: 'images', maxCount: 20 },
   { name: 'mainImage', maxCount: 1 }
 ]), asyncHandler(async (req, res) => {
@@ -309,10 +310,9 @@ router.put('/:id', protect, admin, upload.fields([
 
   // Add new uploaded images
   if (req.files && req.files['images'] && req.files['images'].length > 0) {
-    const newImages = req.files['images'].map((file, index) => ({
-      url: file.path,
-      alt: `${title || project.title} - Image ${images.length + index + 1}`,
-      isPrimary: images.length === 0 && index === 0
+    const newImages = await Promise.all(req.files['images'].map(async (file, index) => {
+      const { secure_url } = await uploadfile(file.path);
+      return { url: secure_url, alt: `${title || project.title} - Image ${images.length + index + 1}`, isPrimary: images.length === 0 && index === 0 };
     }));
     images = [...images, ...newImages];
   }
@@ -320,7 +320,8 @@ router.put('/:id', protect, admin, upload.fields([
   // Handle mainImage (hero image) upload
   if (req.files && req.files['mainImage'] && req.files['mainImage'][0]) {
     const file = req.files['mainImage'][0];
-    project.mainImage = file.path;
+    const { secure_url } = await uploadfile(file.path);
+    project.mainImage = secure_url;
   }
 
   // Update project fields
