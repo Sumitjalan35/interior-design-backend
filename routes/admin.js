@@ -10,6 +10,7 @@ const path = require('path');
 const multer = require('multer');
 const { CloudinaryStorage } = require('multer-storage-cloudinary');
 const cloudinary = require('cloudinary').v2;
+const { upload, uploadfile } = require('../middleware/upload');
 
 cloudinary.config({
   cloud_name: process.env.CLOUDINARY_CLOUD_NAME || 'bb-root',
@@ -45,16 +46,23 @@ async function writeJson(file, data) {
 const router = express.Router();
 
 // --- Image Upload with proper authentication ---
-router.post('/upload', protect, admin, upload.array('images', 20), (req, res, next) => {
+router.post('/upload', protect, admin, upload.array('images', 20), async (req, res, next) => {
   if (!req.files || req.files.length === 0) {
     return res.status(400).json({ error: 'No file uploaded' });
   }
-  // Cloudinary URLs are in req.files[].path
-  const paths = req.files.map(f => f.path);
-  if (paths.length === 1) {
-    return res.json({ path: paths[0] });
+  try {
+    const uploadPromises = req.files.map(async (file) => {
+      const result = await uploadfile(file.path);
+      return result?.secure_url;
+    });
+    const urls = await Promise.all(uploadPromises);
+    if (urls.length === 1) {
+      return res.json({ url: urls[0] });
+    }
+    return res.json({ urls });
+  } catch (err) {
+    next(err);
   }
-  return res.json({ paths });
 });
 
 // All other routes require admin authentication
