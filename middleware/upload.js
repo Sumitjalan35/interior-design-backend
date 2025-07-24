@@ -1,7 +1,6 @@
 const multer = require('multer');
 const { v2: cloudinary } = require('cloudinary');
 const fs = require('fs');
-const { ApiError } = require('./apierror');
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
@@ -15,7 +14,7 @@ const storage = multer.diskStorage({
 const upload = multer({ storage });
 
 cloudinary.config({
-  cloud_name: process.env.CLOUD_NAME,
+  cloud_name: 'BB',
   api_key: process.env.API_KEY,
   api_secret: process.env.API_SECRET
 });
@@ -39,7 +38,7 @@ const uploadfile = async (localfilepath) => {
 const deletefile = async (publicId) => {
   try {
     if (!publicId) {
-      throw new ApiError(400, 'the file path is missing');
+      throw new Error('the file path is missing');
     }
     const response = await cloudinary.uploader.destroy(publicId);
     console.log(response);
