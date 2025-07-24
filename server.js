@@ -18,6 +18,25 @@ const notificationRoutes = require('./routes/notifications');
 const publicRoutes = require('./routes/public');
 const slideshowRoutes = require('./routes/slideshow');
 const { errorHandler } = require('./middleware/errorHandler');
+const multer = require('multer');
+const cloudinary = require('cloudinary').v2;
+const { CloudinaryStorage } = require('multer-storage-cloudinary');
+
+// Cloudinary config
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME || 'bb-root',
+  api_key: process.env.CLOUDINARY_API_KEY || '433893671529262',
+  api_secret: process.env.CLOUDINARY_API_SECRET || 'qth_FC6o6lyIgt0oNEa4oNsDEu8',
+});
+
+const storage = new CloudinaryStorage({
+  cloudinary: cloudinary,
+  params: {
+    folder: 'admin_uploads',
+    allowed_formats: ['jpg', 'jpeg', 'png', 'gif'],
+  },
+});
+const upload = multer({ storage: storage });
 
 const app = express();
 
@@ -55,8 +74,7 @@ app.use(cors({
         'https://www.beyondblueprint.co.in',
         'https://admin.beyondblueprint.co.in',
         'https://api.beyondblueprint.co.in',
-        'https://interior-design-frontend-xi.vercel.app',
-        'https://interior-design-frontend-sumit-jalans-projects.vercel.app'
+        'https://interior-design-frontend-xi.vercel.app'
       ]
     : (origin, callback) => {
         // Allow all localhost ports in development
@@ -84,6 +102,7 @@ app.use('/uploads', express.static(path.join(__dirname, 'uploads'), {
     res.removeHeader && res.removeHeader('Access-Control-Allow-Credentials');
   }
 }));
+
 // API Routes
 app.use('/api/auth', authRoutes);
 app.use('/api/contact', contactRoutes);
@@ -94,6 +113,15 @@ app.use('/api/notifications', notificationRoutes);
 app.use('/api', publicRoutes);
 app.use('/api/projects', projectRoutes);
 app.use('/api/slideshow', slideshowRoutes);
+
+// Cloudinary image upload endpoint
+app.post('/api/admin/upload-cloudinary', upload.single('images'), (req, res) => {
+  if (!req.file || !req.file.path) {
+    return res.status(400).json({ error: 'No file uploaded' });
+  }
+  // Cloudinary URL is in req.file.path
+  res.json({ url: req.file.path });
+});
 
 // Logging middleware
 if (process.env.NODE_ENV === 'development') {
