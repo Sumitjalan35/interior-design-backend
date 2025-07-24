@@ -1,28 +1,10 @@
 const express = require('express');
-const multer = require('multer');
 const path = require('path');
 const fs = require('fs');
 const { asyncHandler } = require('../middleware/errorHandler');
 const { protect, admin, optionalAuth } = require('../middleware/auth');
 const Project = require('../models/Project');
-const { CloudinaryStorage } = require('multer-storage-cloudinary');
-const cloudinary = require('cloudinary').v2;
 const { upload, uploadfile } = require('../middleware/upload');
-
-cloudinary.config({
-  cloud_name: process.env.CLOUDINARY_CLOUD_NAME || 'BB',
-  api_key: process.env.CLOUDINARY_API_KEY || '433893671529262',
-  api_secret: process.env.CLOUDINARY_API_SECRET || 'qth_FC6o6lyIgt0oNEa4oNsDEu8',
-});
-
-const storage = new CloudinaryStorage({
-  cloudinary: cloudinary,
-  params: {
-    folder: 'project_uploads',
-    allowed_formats: ['jpg', 'jpeg', 'png', 'gif'],
-  },
-});
-const uploadMulter = require('multer')({ storage: storage });
 
 const router = express.Router();
 
@@ -202,7 +184,7 @@ router.get('/:id', optionalAuth, asyncHandler(async (req, res) => {
 // @desc    Create new project (admin only)
 // @route   POST /api/projects
 // @access  Private/Admin
-router.post('/', protect, admin, uploadMulter.array('images', 10), asyncHandler(async (req, res) => {
+router.post('/', protect, admin, upload.array('images', 10), asyncHandler(async (req, res) => {
   const {
     title,
     description,
@@ -271,7 +253,7 @@ router.post('/', protect, admin, uploadMulter.array('images', 10), asyncHandler(
 // @desc    Update project (admin only)
 // @route   PUT /api/projects/:id
 // @access  Private/Admin
-router.put('/:id', protect, admin, uploadMulter.fields([
+router.put('/:id', protect, admin, upload.fields([
   { name: 'images', maxCount: 20 },
   { name: 'mainImage', maxCount: 1 }
 ]), asyncHandler(async (req, res) => {
