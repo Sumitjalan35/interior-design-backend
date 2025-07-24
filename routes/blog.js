@@ -1,28 +1,10 @@
 const express = require('express');
-const multer = require('multer');
 const path = require('path');
 const fs = require('fs');
 const { asyncHandler } = require('../middleware/errorHandler');
 const { protect, admin, checkPermission } = require('../middleware/auth');
 const BlogPost = require('../models/BlogPost');
-const { CloudinaryStorage } = require('multer-storage-cloudinary');
-const cloudinary = require('cloudinary').v2;
 const { upload, uploadfile } = require('../middleware/upload');
-
-cloudinary.config({
-  cloud_name: process.env.CLOUDINARY_CLOUD_NAME || 'BB',
-  api_key: process.env.CLOUDINARY_API_KEY || '433893671529262',
-  api_secret: process.env.CLOUDINARY_API_SECRET || 'qth_FC6o6lyIgt0oNEa4oNsDEu8',
-});
-
-const storage = new CloudinaryStorage({
-  cloudinary: cloudinary,
-  params: {
-    folder: 'blog_uploads',
-    allowed_formats: ['jpg', 'jpeg', 'png', 'gif'],
-  },
-});
-const upload = require('multer')({ storage: storage });
 
 const router = express.Router();
 
