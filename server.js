@@ -24,7 +24,7 @@ const { CloudinaryStorage } = require('multer-storage-cloudinary');
 
 // Cloudinary config
 cloudinary.config({
-  cloud_name: process.env.CLOUDINARY_CLOUD_NAME || 'dsffxqf8f',
+  cloud_name: 'dsffxqf8f',
   api_key: process.env.CLOUDINARY_API_KEY || '433893671529262',
   api_secret: process.env.CLOUDINARY_API_SECRET || 'qth_FC6o6lyIgt0oNEa4oNsDEu8',
 });
@@ -66,17 +66,31 @@ const limiter = rateLimit({
 });
 app.use('/api/', limiter);
 
-// Update CORS configuration to allow credentials and set Access-Control-Allow-Origin dynamically
+// Unified allowedOrigins for CORS and static files
 const allowedOrigins = [
   'https://beyondblueprint.co.in',
   'https://www.beyondblueprint.co.in',
   'https://admin.beyondblueprint.co.in',
   'https://api.beyondblueprint.co.in',
-  'https://interior-design-frontend-xi.vercel.app'
+  'https://interior-design-frontend-xi.vercel.app',
+  'https://interior-design-frontend-xi-git-main-sumitjalan35.vercel.app',
+  'https://interior-design-frontend-xi-git-dev-sumitjalan35.vercel.app',
+  'http://localhost:3000',
+  'http://localhost:5173',
+  'http://127.0.0.1:3000',
+  'http://127.0.0.1:5173'
 ];
+// Allow all Vercel preview URLs
+function isAllowedOrigin(origin) {
+  if (!origin) return true;
+  if (allowedOrigins.includes(origin)) return true;
+  if (/^https:\/\/interior-design-frontend-xi-git-[\w-]+-sumitjalan35\.vercel\.app$/.test(origin)) return true;
+  if (/^http:\/\/localhost:\d+$/.test(origin)) return true;
+  return false;
+}
 app.use(cors({
   origin: (origin, callback) => {
-    if (!origin || allowedOrigins.includes(origin) || /^http:\/\/localhost:\d+$/.test(origin)) {
+    if (isAllowedOrigin(origin)) {
       callback(null, true);
     } else {
       callback(new Error('Not allowed by CORS'));
@@ -94,20 +108,12 @@ app.use(express.urlencoded({ extended: true, limit: '50mb' }));
 // Static files
 app.use('/uploads', express.static(path.join(__dirname, 'uploads'), {
   setHeaders: (res, filePath, stat) => {
-    // Only set Access-Control-Allow-Origin for allowed origins
-    const allowedOrigins = [
-      'https://beyondblueprint.co.in',
-      'https://www.beyondblueprint.co.in',
-      'https://admin.beyondblueprint.co.in',
-      'https://api.beyondblueprint.co.in',
-      'https://interior-design-frontend-xi.vercel.app'
-    ];
+    // Use the same allowedOrigins logic as above
     const origin = res.req.headers.origin;
-    if (origin && allowedOrigins.includes(origin)) {
+    if (isAllowedOrigin(origin)) {
       res.setHeader('Access-Control-Allow-Origin', origin);
       res.setHeader('Vary', 'Origin');
     }
-    // Remove any Access-Control-Allow-Credentials header for static files
     res.removeHeader && res.removeHeader('Access-Control-Allow-Credentials');
   }
 }));
