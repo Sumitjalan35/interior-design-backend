@@ -24,7 +24,7 @@ const { CloudinaryStorage } = require('multer-storage-cloudinary');
 
 // Cloudinary config
 cloudinary.config({
-  cloud_name: process.env.CLOUDINARY_CLOUD_NAME || 'BB',
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME || 'dsffxqf8f',
   api_key: process.env.CLOUDINARY_API_KEY || '433893671529262',
   api_secret: process.env.CLOUDINARY_API_SECRET || 'qth_FC6o6lyIgt0oNEa4oNsDEu8',
 });
