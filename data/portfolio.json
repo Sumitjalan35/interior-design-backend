@@ -32,7 +32,7 @@
         "role": "Client"
       }
     ],
-    "image": "/uploads/admin/1752766519941-589189281.png"
+    "image": "/assets/Dr_Aftab_Ahmad/1-34.png"
   },
   {
     "id": 2,
@@ -65,7 +65,7 @@
         "role": "Owner"
       }
     ],
-    "image": "/uploads/admin/1752766526877-36159197.png"
+    "image": "/assets/Mr_Amit_Agarwal_Showroom/IMG-20240918-WA0001.jpg"
   },
   {
     "id": 3,
@@ -98,7 +98,7 @@
         "role": "Client"
       }
     ],
-    "image": "/uploads/admin/1752382842775-349915276.png"
+    "image": "/assets/Mr_Shashank_Khetan_Residance/Screenshot 2025-07-02 205820.png"
   },
   {
     "id": 4,
@@ -131,20 +131,20 @@
         "role": "Client"
       }
     ],
-    "image": "/uploads/admin/1752788259551-208838998.png"
+    "image": "/assets/Sadir_Khan_residence/1.jpg"
   },
   {
     "id": 5,
     "title": "Executive Suite",
     "category": "executive",
-    "mainImage": "/uploads/admin/1752788625101-28811965.png",
+    "mainImage": "/assets/Executive_Suite/1752386032591-313048645.png",
     "images": [
-      "/uploads/admin/1752386032591-313048645.png",
-      "/uploads/admin/1752386032595-65768443.png",
-      "/uploads/admin/1752386032596-279860142.png",
-      "/uploads/admin/1752386032598-727924457.png",
-      "/uploads/admin/1752386032600-664165657.png",
-      "/uploads/admin/1752386032601-852976535.png"
+      "/assets/Executive_Suite/1752386032591-313048645.png",
+      "/assets/Executive_Suite/1752386032595-65768443.png",
+      "/assets/Executive_Suite/1752386032596-279860142.png",
+      "/assets/Executive_Suite/1752386032598-727924457.png",
+      "/assets/Executive_Suite/1752386032600-664165657.png",
+      "/assets/Executive_Suite/1752386032601-852976535.png"
     ],
     "description": "Sophisticated executive suite with premium finishes",
     "longDescription": "An executive suite designed for the modern professional, featuring sophisticated design elements, premium materials, and functional workspaces that inspire productivity and success.",
@@ -167,28 +167,28 @@
         "role": "Business Owner"
       }
     ],
-    "image": "/uploads/admin/1752385997492-876251653.png"
+    "image": "/assets/Executive_Suite/1752386032591-313048645.png"
   },
   {
     "title": "anikt agarwal",
     "description": "hello",
-    "image": "/uploads/admin/1752382898077-408173009.png",
+    "image": "/assets/anikt_agarwal/1752382898077-408173009.png",
     "id": 6,
     "images": [
-      "/uploads/admin/1752382915853-820841061.png",
-      "/uploads/admin/1752382915875-974767001.png",
-      "/uploads/admin/1752382915913-859807964.png",
-      "/uploads/admin/1752382915935-352549016.png",
-      "/uploads/admin/1752382915951-920286587.png",
-      "/uploads/admin/1752382915975-753684693.png",
-      "/uploads/admin/1752382915996-492377679.png",
-      "/uploads/admin/1752382916004-958180105.png",
-      "/uploads/admin/1752382916018-805539998.png",
-      "/uploads/admin/1752382916041-346869038.png",
-      "/uploads/admin/1752382916049-497108449.png",
-      "/uploads/admin/1752382916056-960252502.png",
-      "/uploads/admin/1752382916083-229516946.png"
+      "/assets/anikt_agarwal/1752382915853-820841061.png",
+      "/assets/anikt_agarwal/1752382915875-974767001.png",
+      "/assets/anikt_agarwal/1752382915913-859807964.png",
+      "/assets/anikt_agarwal/1752382915935-352549016.png",
+      "/assets/anikt_agarwal/1752382915951-920286587.png",
+      "/assets/anikt_agarwal/1752382915975-753684693.png",
+      "/assets/anikt_agarwal/1752382915996-492377679.png",
+      "/assets/anikt_agarwal/1752382916004-958180105.png",
+      "/assets/anikt_agarwal/1752382916018-805539998.png",
+      "/assets/anikt_agarwal/1752382916041-346869038.png",
+      "/assets/anikt_agarwal/1752382916049-497108449.png",
+      "/assets/anikt_agarwal/1752382916056-960252502.png",
+      "/assets/anikt_agarwal/1752382916083-229516946.png"
     ],
-    "mainImage": "/uploads/admin/1752385897555-998262557.png"
+    "mainImage": "/assets/anikt_agarwal/1752385897555-998262557.png"
   }
 ]
