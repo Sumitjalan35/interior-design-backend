@@ -70,11 +70,10 @@ app.use('/api/', limiter);
 const allowedOrigins = [
   'https://beyondblueprint.co.in',
   'https://www.beyondblueprint.co.in',
-  'https://admin.beyondblueprint.co.in',
-  'https://api.beyondblueprint.co.in',
-  'https://interior-design-frontend-xi.vercel.app',
-  'https://interior-design-frontend-xi-git-main-sumitjalan35.vercel.app',
-  'https://interior-design-frontend-xi-git-dev-sumitjalan35.vercel.app',
+  'https://api.beyondblueprint.co.in', // backend API domain
+  'https://interior-design-frontend-xi.vercel.app', // Vercel production preview (optional)
+  'https://interior-design-frontend-xi-git-main-sumitjalan35.vercel.app', // Vercel branch preview (optional)
+  'https://interior-design-frontend-xi-git-dev-sumitjalan35.vercel.app', // Vercel branch preview (optional)
   'http://localhost:3000',
   'http://localhost:5173',
   'http://127.0.0.1:3000',
