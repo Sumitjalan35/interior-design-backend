@@ -128,6 +128,109 @@ router.get('/', optionalAuth, asyncHandler(async (req, res) => {
   });
 }));
 
+// @desc    Get all projects with sequence info (admin only)
+// @route   GET /api/projects/sequence
+// @access  Private/Admin
+router.get('/sequence', protect, admin, asyncHandler(async (req, res) => {
+  const projects = await Project.find({})
+    .populate('createdBy', 'username')
+    .sort({ sequence: 1, createdAt: -1 })
+    .select('title sequence category published featured');
+
+  res.json({
+    success: true,
+    data: projects
+  });
+}));
+
+// @desc    Update project sequence (admin only)
+// @route   PUT /api/projects/sequence
+// @access  Private/Admin
+router.put('/sequence', protect, admin, asyncHandler(async (req, res) => {
+  try {
+    const { sequences } = req.body; // Array of { id, sequence }
+
+    console.log('Received sequences update request:', sequences);
+
+    if (!Array.isArray(sequences)) {
+      return res.status(400).json({
+        success: false,
+        message: 'Sequences must be an array'
+      });
+    }
+
+    // Update each project's sequence
+    const updatePromises = sequences.map(async ({ id, sequence }) => {
+      console.log(`Updating project ${id} with sequence ${sequence}`);
+      return await Project.findByIdAndUpdate(id, { sequence: parseInt(sequence) }, { new: true });
+    });
+
+    const updatedProjects = await Promise.all(updatePromises);
+    console.log('Successfully updated sequences for', updatedProjects.length, 'projects');
+
+    res.json({
+      success: true,
+      message: 'Project sequences updated successfully',
+      data: updatedProjects
+    });
+  } catch (error) {
+    console.error('Error updating project sequences:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Internal server error',
+      error: error.message
+    });
+  }
+}));
+
+// @desc    Reorder projects (admin only)
+// @route   POST /api/projects/reorder
+// @access  Private/Admin
+router.post('/reorder', protect, admin, asyncHandler(async (req, res) => {
+  const { projectIds } = req.body; // Array of project IDs in new order
+
+  if (!Array.isArray(projectIds)) {
+    return res.status(400).json({
+      success: false,
+      message: 'Project IDs must be an array'
+    });
+  }
+
+  // Update sequences based on array order
+  const updatePromises = projectIds.map((id, index) => 
+    Project.findByIdAndUpdate(id, { sequence: index + 1 }, { new: true })
+  );
+
+  await Promise.all(updatePromises);
+
+  res.json({
+    success: true,
+    message: 'Projects reordered successfully'
+  });
+}));
+
+// @desc    Get project statistics (admin only)
+// @route   GET /api/projects/stats/overview
+// @access  Private/Admin
+router.get('/stats/overview', protect, admin, asyncHandler(async (req, res) => {
+  const total = await Project.countDocuments();
+  const published = await Project.countDocuments({ published: true });
+  const featured = await Project.countDocuments({ featured: true });
+  const totalViews = await Project.aggregate([
+    { $group: { _id: null, totalViews: { $sum: '$views' } } }
+  ]);
+
+  res.json({
+    success: true,
+    data: {
+      total,
+      published,
+      featured,
+      totalViews: totalViews[0]?.totalViews || 0
+    }
+  });
+}));
+
 // @desc    Get featured projects (public)
 // @route   GET /api/projects/featured
 // @access  Public
@@ -405,95 +508,6 @@ router.post('/:id/like', protect, asyncHandler(async (req, res) => {
     success: true,
     message: 'Project liked',
     data: { likes: project.likes }
-  });
-}));
-
-// @desc    Get project statistics (admin only)
-// @route   GET /api/projects/stats/overview
-// @access  Private/Admin
-router.get('/stats/overview', protect, admin, asyncHandler(async (req, res) => {
-  const total = await Project.countDocuments();
-  const published = await Project.countDocuments({ published: true });
-  const featured = await Project.countDocuments({ featured: true });
-  const totalViews = await Project.aggregate([
-    { $group: { _id: null, totalViews: { $sum: '$views' } } }
-  ]);
-
-  res.json({
-    success: true,
-    data: {
-      total,
-      published,
-      featured,
-      totalViews: totalViews[0]?.totalViews || 0
-    }
-  });
-}));
-
-// @desc    Get all projects with sequence info (admin only)
-// @route   GET /api/projects/sequence
-// @access  Private/Admin
-router.get('/sequence', protect, admin, asyncHandler(async (req, res) => {
-  const projects = await Project.find({})
-    .populate('createdBy', 'username')
-    .sort({ sequence: 1, createdAt: -1 })
-    .select('title sequence category published featured');
-
-  res.json({
-    success: true,
-    data: projects
-  });
-}));
-
-// @desc    Update project sequence (admin only)
-// @route   PUT /api/projects/sequence
-// @access  Private/Admin
-router.put('/sequence', protect, admin, asyncHandler(async (req, res) => {
-  const { sequences } = req.body; // Array of { id, sequence }
-
-  if (!Array.isArray(sequences)) {
-    return res.status(400).json({
-      success: false,
-      message: 'Sequences must be an array'
-    });
-  }
-
-  // Update each project's sequence
-  const updatePromises = sequences.map(({ id, sequence }) => 
-    Project.findByIdAndUpdate(id, { sequence: parseInt(sequence) }, { new: true })
-  );
-
-  await Promise.all(updatePromises);
-
-  res.json({
-    success: true,
-    message: 'Project sequences updated successfully'
-  });
-}));
-
-// @desc    Reorder projects (admin only)
-// @route   POST /api/projects/reorder
-// @access  Private/Admin
-router.post('/reorder', protect, admin, asyncHandler(async (req, res) => {
-  const { projectIds } = req.body; // Array of project IDs in new order
-
-  if (!Array.isArray(projectIds)) {
-    return res.status(400).json({
-      success: false,
-      message: 'Project IDs must be an array'
-    });
-  }
-
-  // Update sequences based on array order
-  const updatePromises = projectIds.map((id, index) => 
-    Project.findByIdAndUpdate(id, { sequence: index + 1 }, { new: true })
-  );
-
-  await Promise.all(updatePromises);
-
-  res.json({
-    success: true,
-    message: 'Projects reordered successfully'
   });
 }));
 
