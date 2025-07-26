@@ -135,7 +135,7 @@ router.get('/sequence', protect, admin, asyncHandler(async (req, res) => {
   const projects = await Project.find({})
     .populate('createdBy', 'username')
     .sort({ sequence: 1, createdAt: -1 })
-    .select('title sequence category published featured');
+    .select('_id title sequence category published featured');
 
   res.json({
     success: true,
