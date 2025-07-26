@@ -15,7 +15,7 @@ const projectSchema = new mongoose.Schema({
   category: {
     type: String,
     required: [true, 'Project category is required'],
-    enum: ['residential', 'commercial', 'kitchen-bath', 'furniture', 'consultation', 'renovation', 'new-construction']
+    enum: ['residential', 'commercial', 'kitchen-bath', 'furniture', 'consultation', 'renovation', 'new-construction', 'luxury', 'modern', 'executive']
   },
   images: [{
     url: {
@@ -64,6 +64,10 @@ const projectSchema = new mongoose.Schema({
   published: {
     type: Boolean,
     default: true
+  },
+  sequence: {
+    type: Number,
+    default: 0
   },
   views: {
     type: Number,
