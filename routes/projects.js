@@ -27,6 +27,7 @@ const syncProjectWithPortfolio = async (projectData, projectId) => {
       mainImage: projectData.images?.[0]?.url || projectData.mainImage,
       images: projectData.images?.map(img => img.url) || [],
       category: projectData.category,
+      sequence: projectData.sequence || 0,
       area: projectData.area ? `${projectData.area} sq ft` : 'N/A',
       duration: projectData.duration || 'N/A',
       location: projectData.location || 'N/A',
@@ -47,6 +48,9 @@ const syncProjectWithPortfolio = async (projectData, projectId) => {
       // Add new entry
       portfolioData.push(portfolioEntry);
     }
+    
+    // Sort by sequence
+    portfolioData.sort((a, b) => (a.sequence || 0) - (b.sequence || 0));
     
     // Write back to file
     fs.writeFileSync(portfolioPath, JSON.stringify(portfolioData, null, 2));
@@ -99,7 +103,7 @@ router.get('/', optionalAuth, asyncHandler(async (req, res) => {
 
   const projects = await Project.find(query)
     .populate('createdBy', 'username')
-    .sort({ createdAt: -1 })
+    .sort({ sequence: 1, createdAt: -1 })
     .skip((page - 1) * limit)
     .limit(limit);
 
@@ -197,6 +201,7 @@ router.post('/', protect, admin, upload.array('images', 10), asyncHandler(async 
     tags,
     featured,
     published,
+    sequence,
     clientName,
     clientTestimonial,
     materials,
@@ -220,6 +225,7 @@ router.post('/', protect, admin, upload.array('images', 10), asyncHandler(async 
     area: area ? parseInt(area) : undefined,
     budget: budget ? parseInt(budget) : undefined,
     duration,
+    sequence: sequence ? parseInt(sequence) : 0,
     services: services ? JSON.parse(services) : [],
     tags: tags ? JSON.parse(tags) : [],
     featured: featured === 'true',
@@ -278,6 +284,7 @@ router.put('/:id', protect, admin, upload.fields([
     tags,
     featured,
     published,
+    sequence,
     clientName,
     clientTestimonial,
     materials,
@@ -314,6 +321,7 @@ router.put('/:id', protect, admin, upload.fields([
   if (area !== undefined) project.area = parseInt(area);
   if (budget !== undefined) project.budget = parseInt(budget);
   if (duration !== undefined) project.duration = duration;
+  if (sequence !== undefined) project.sequence = parseInt(sequence);
   if (services) project.services = JSON.parse(services);
   if (tags) project.tags = JSON.parse(tags);
   if (featured !== undefined) project.featured = featured === 'true';
@@ -419,6 +427,73 @@ router.get('/stats/overview', protect, admin, asyncHandler(async (req, res) => {
       featured,
       totalViews: totalViews[0]?.totalViews || 0
     }
+  });
+}));
+
+// @desc    Get all projects with sequence info (admin only)
+// @route   GET /api/projects/sequence
+// @access  Private/Admin
+router.get('/sequence', protect, admin, asyncHandler(async (req, res) => {
+  const projects = await Project.find({})
+    .populate('createdBy', 'username')
+    .sort({ sequence: 1, createdAt: -1 })
+    .select('title sequence category published featured');
+
+  res.json({
+    success: true,
+    data: projects
+  });
+}));
+
+// @desc    Update project sequence (admin only)
+// @route   PUT /api/projects/sequence
+// @access  Private/Admin
+router.put('/sequence', protect, admin, asyncHandler(async (req, res) => {
+  const { sequences } = req.body; // Array of { id, sequence }
+
+  if (!Array.isArray(sequences)) {
+    return res.status(400).json({
+      success: false,
+      message: 'Sequences must be an array'
+    });
+  }
+
+  // Update each project's sequence
+  const updatePromises = sequences.map(({ id, sequence }) => 
+    Project.findByIdAndUpdate(id, { sequence: parseInt(sequence) }, { new: true })
+  );
+
+  await Promise.all(updatePromises);
+
+  res.json({
+    success: true,
+    message: 'Project sequences updated successfully'
+  });
+}));
+
+// @desc    Reorder projects (admin only)
+// @route   POST /api/projects/reorder
+// @access  Private/Admin
+router.post('/reorder', protect, admin, asyncHandler(async (req, res) => {
+  const { projectIds } = req.body; // Array of project IDs in new order
+
+  if (!Array.isArray(projectIds)) {
+    return res.status(400).json({
+      success: false,
+      message: 'Project IDs must be an array'
+    });
+  }
+
+  // Update sequences based on array order
+  const updatePromises = projectIds.map((id, index) => 
+    Project.findByIdAndUpdate(id, { sequence: index + 1 }, { new: true })
+  );
+
+  await Promise.all(updatePromises);
+
+  res.json({
+    success: true,
+    message: 'Projects reordered successfully'
   });
 }));
 
