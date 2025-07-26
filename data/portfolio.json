@@ -17,6 +17,7 @@
     "budget": "₹15,00,000",
     "duration": "3 months",
     "location": "Mumbai, Maharashtra",
+    "sequence": 1,
     "features": [
       "Custom furniture design",
       "Premium material selection",
@@ -50,6 +51,7 @@
     "budget": "₹25,00,000",
     "duration": "4 months",
     "location": "Delhi, NCR",
+    "sequence": 2,
     "features": [
       "Modern retail design",
       "Innovative lighting solutions",
@@ -83,6 +85,7 @@
     "budget": "₹18,00,000",
     "duration": "3.5 months",
     "location": "Bangalore, Karnataka",
+    "sequence": 3,
     "features": [
       "Luxury interior design",
       "Custom furniture",
@@ -116,6 +119,7 @@
     "budget": "₹12,00,000",
     "duration": "2.5 months",
     "location": "Pune, Maharashtra",
+    "sequence": 4,
     "features": [
       "Modern minimalist design",
       "Open floor plan",
@@ -152,6 +156,7 @@
     "budget": "₹10,00,000",
     "duration": "2 months",
     "location": "Hyderabad, Telangana",
+    "sequence": 5,
     "features": [
       "Executive workspace design",
       "Premium office furniture",
@@ -189,6 +194,7 @@
       "/assets/anikt_agarwal/1752382916056-960252502.png",
       "/assets/anikt_agarwal/1752382916083-229516946.png"
     ],
-    "mainImage": "/assets/anikt_agarwal/1752385897555-998262557.png"
+    "mainImage": "/assets/anikt_agarwal/1752385897555-998262557.png",
+    "sequence": 6
   }
 ]
